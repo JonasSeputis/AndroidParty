@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="loginButtonColor">#9FD533</color>
+    <color name="toolbarColor">#F0F0F0</color>
+    <color name="greyColor">#A5A5A5</color>
+    <color name="textGreyColor">#747474</color>
 </resources>
