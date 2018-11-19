@@ -3,8 +3,8 @@ package jonas.androidparty.networking;
 import java.util.List;
 
 import io.reactivex.Observable;
-import jonas.androidparty.response.Server;
-import jonas.androidparty.response.Token;
+import jonas.androidparty.networking.model.response.Server;
+import jonas.androidparty.networking.model.response.Token;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;

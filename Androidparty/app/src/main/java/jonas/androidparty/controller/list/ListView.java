@@ -2,7 +2,7 @@ package jonas.androidparty.controller.list;
 
 import java.util.List;
 
-import jonas.androidparty.response.Server;
+import jonas.androidparty.networking.model.response.Server;
 
 /**
  * class created by jonasseputis on 18/11/18

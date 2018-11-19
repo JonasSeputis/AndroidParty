@@ -1,4 +1,4 @@
-package jonas.androidparty.response;
+package jonas.androidparty.networking.model.response;
 
 import com.google.gson.annotations.SerializedName;
 

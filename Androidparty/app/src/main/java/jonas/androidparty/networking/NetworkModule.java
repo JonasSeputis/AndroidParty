@@ -14,6 +14,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
 import jonas.androidparty.BuildConfig;
+import jonas.androidparty.networking.interceptor.UnauthorizedInterceptor;
 import jonas.androidparty.networking.sheduler.Network;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -38,7 +39,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient() {
+    public UnauthorizedInterceptor provideUnauthorizedInterceptor(Gson gson) {
+        return new UnauthorizedInterceptor(gson);
+    }
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(UnauthorizedInterceptor unauthorizedInterceptor) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> Log.d("NetworkModule", message));
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
@@ -46,6 +53,7 @@ public class NetworkModule {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
+                .addInterceptor(unauthorizedInterceptor)
                 .build();
     }
 

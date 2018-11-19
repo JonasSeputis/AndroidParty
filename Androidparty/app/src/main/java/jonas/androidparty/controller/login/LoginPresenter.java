@@ -2,13 +2,14 @@ package jonas.androidparty.controller.login;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.Scheduler;
-import jonas.androidparty.BuildConfig;
+import io.reactivex.disposables.Disposable;
 import jonas.androidparty.base.BasePresenter;
 import jonas.androidparty.networking.account.AccountHelper;
+import jonas.androidparty.networking.exeption.ApiException;
+import jonas.androidparty.networking.model.response.Token;
 import jonas.androidparty.networking.sheduler.Main;
-import jonas.androidparty.response.Token;
 import jonas.androidparty.utils.TextUtils;
 
 /**
@@ -29,45 +30,49 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     public void makeLogin(String username, String password) {
         if (checkUsernameAndPassword(username, password))
-            loginObservable(username, password);
+            handleLoginObservable(username, password);
     }
 
     private boolean checkUsernameAndPassword(String username, String password) {
-        if (!TextUtils.isTextIsEmptyOrNull(username) && !TextUtils.isTextIsEmptyOrNull(password)) {
-            if(username.equals(BuildConfig.USERNAME) && password.equals(BuildConfig.PASSWORD)) {
-                return true;
-            } else {
-                if (hasView())
-                    getView().loginError();
-                return false;
-            }
-        } else {
-            if (hasView())
-                getView().credentialsError();
+        if (TextUtils.isTextIsEmptyOrNull(username) || TextUtils.isTextIsEmptyOrNull(password)) {
+            getView().credentialsError();
             return false;
         }
+        return true;
     }
 
-    private void loginObservable(String username, String password) {
-        retrieveLoginObservable(username, password).subscribe();
-    }
-
-    private Observable<Token> retrieveLoginObservable(String username, String password) {
-        return loginRepository.login(username, password)
+    private void handleLoginObservable(String username, String password) {
+        loginRepository.login(username, password)
                 .observeOn(scheduler)
-                .doOnSubscribe(subscriptions::add)
-                .doOnNext(token -> {
-                    accountHelper.createAccount();
-                    accountHelper.setTokenType("Bearer");
-                    accountHelper.setAccessToken(token.getAccessToken());
-                    if (hasView())
-                        getView().successLogin(token.getAccessToken());
-                })
-                .doOnError(e -> {
-                    if (hasView())
-                        getView().loginError();
-                });
+                .subscribe(new Observer<Token>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        subscriptions.add(d);
+                    }
 
+                    @Override
+                    public void onNext(Token token) {
+                        accountHelper.createAccount();
+                        accountHelper.setTokenType("Bearer");
+                        accountHelper.setAccessToken(token.getAccessToken());
+                        getView().successLogin(token.getAccessToken());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof ApiException) {
+                            switch (((ApiException) e).response.getMessageError()) {
+                                case ApiException.INVALID_CREDENTIALS:
+                                    getView().loginError();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }

@@ -21,7 +21,7 @@ import jonas.androidparty.R;
 import jonas.androidparty.activity.MainActivity;
 import jonas.androidparty.adapter.ServersListAdapter;
 import jonas.androidparty.networking.account.AccountHelper;
-import jonas.androidparty.response.Server;
+import jonas.androidparty.networking.model.response.Server;
 
 /**
  * class created by jonasseputis on 18/11/18

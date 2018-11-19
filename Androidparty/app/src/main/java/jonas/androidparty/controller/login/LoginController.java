@@ -1,7 +1,6 @@
 package jonas.androidparty.controller.login;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +61,12 @@ public class LoginController extends Controller implements LoginView, Button.OnC
 
     @Override
     public void credentialsError() {
-        Toast.makeText(getActivity(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.err_fields_must_be_filled, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loginError() {
-        Toast.makeText(getActivity(), "Please, check entered crediantials", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.err_check_credentials, Toast.LENGTH_SHORT).show();
     }
 
 }

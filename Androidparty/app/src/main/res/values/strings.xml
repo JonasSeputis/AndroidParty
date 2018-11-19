@@ -3,4 +3,9 @@
     <string name="lbl_username">Username</string>
     <string name="lbl_password">Password</string>
     <string name="btn_log_in">Log In</string>
+    <string name="err_check_credentials">Please, check entered credentials</string>
+    <string name="err_fields_must_be_filled">All fields must be filled</string>
+    <string name="lbl_fetching_the_list">Fetching the list...</string>
+    <string name="lbl_distance">DISTANCE</string>
+    <string name="lbl_server">SERVER</string>
 </resources>

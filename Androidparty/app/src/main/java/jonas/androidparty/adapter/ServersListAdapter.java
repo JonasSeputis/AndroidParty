@@ -11,7 +11,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jonas.androidparty.R;
-import jonas.androidparty.response.Server;
+import jonas.androidparty.networking.model.response.Server;
 
 /**
  * class created by jonasseputis on 18/11/18

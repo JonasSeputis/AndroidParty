@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import jonas.androidparty.base.BasePresenter;
 import jonas.androidparty.networking.sheduler.Main;
-import jonas.androidparty.response.Server;
+import jonas.androidparty.networking.model.response.Server;
 
 /**
  * class created by jonasseputis on 18/11/18

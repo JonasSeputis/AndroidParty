@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 import jonas.androidparty.base.BaseRepository;
 import jonas.androidparty.networking.AppApi;
 import jonas.androidparty.networking.account.AccountHelper;
-import jonas.androidparty.response.Token;
+import jonas.androidparty.networking.model.response.Token;
 
 /**
  * class created by jonasseputis on 18/11/18
@@ -18,9 +18,8 @@ public class LoginRepository extends BaseRepository {
         super(appApi, accountHelper);
     }
 
-    public Observable<Token> login(String username, String password){
+    public Observable<Token> login(String username, String password) {
         return appApi.login(username, password);
     }
-
 
 }
